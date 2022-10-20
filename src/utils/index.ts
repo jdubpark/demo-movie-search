@@ -6,7 +6,8 @@ export function capitalizeFirstLetter(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
 }
 
-const API_KEY = 'a0bac6208116de8da9697a5f7eedd518'
+// TODO: Fill your api key here
+const API_KEY = ''
 
 export async function getMovies(page: number): Promise<MovieData[]> {
   const url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&page=${page}`

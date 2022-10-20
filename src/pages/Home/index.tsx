@@ -56,8 +56,8 @@ function Gallery(props: MovieProps) {
       </div>
       <div className="grid grid-cols-6 gap-4">
         {
-          movies.map((movie) => (
-            <div key={movie.id}>
+          movies.map((movie, idx) => (
+            <div key={`${idx}_${movie.id}`}>
               <button
                 type="button"
                 onClick={() => props.setCurrentMovieId(movie.id)}
@@ -179,13 +179,13 @@ function MovieSearchView({ movies, setCurrentMovieId }: MovieProps) {
           <div className="form-control">
             <label className="label cursor-pointer">
               <span className="label-text">Ascending</span>
-              <input type="radio" name="radio-6" className="radio checked:bg-red-500" checked={isAsc === 'asc'} onClick={() => setIsAsc('asc')} />
+              <input type="radio" name="radio-6" className="radio checked:bg-red-500" checked={isAsc === 'asc'} onChange={() => setIsAsc('asc')} />
             </label>
           </div>
           <div className="form-control">
             <label className="label cursor-pointer">
               <span className="label-text">Descending</span>
-              <input type="radio" name="radio-6" className="radio checked:bg-blue-500" checked={isAsc === 'desc'} onClick={() => setIsAsc('desc')} />
+              <input type="radio" name="radio-6" className="radio checked:bg-blue-500" checked={isAsc === 'desc'} onChange={() => setIsAsc('desc')} />
             </label>
           </div>
         </div>
@@ -195,7 +195,7 @@ function MovieSearchView({ movies, setCurrentMovieId }: MovieProps) {
           selectedMovies.map((movie, idx) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
             <div
-              key={movie.id}
+              key={`${idx}_${movie.id}`}
               onClick={() => setCurrentMovieId(movie.id)}
               className="flex space-x-6 cursor-pointer hover:bg-[#eee] transition"
             >
@@ -235,10 +235,10 @@ export default function HomePage() {
   useEffect(() => {
     if (movies.length) return
     const proms: Promise<MovieData[]>[] = []
-    // for (let i = 0; i < 5; i++) {
-    //   proms.push(getMovies(i + 1))
-    // }
-    proms.push(getMovies(1))
+    for (let i = 0; i < 5; i++) {
+      proms.push(getMovies(i + 1))
+    }
+    // proms.push(getMovies(1))
     Promise.all(proms).then((movieData) => setMovies(movieData.flat()))
   }, []) // no deps
 
